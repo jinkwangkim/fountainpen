@@ -1,0 +1,4 @@
+rootProject.name = 'fountainpen'
+include 'search-api'
+include 'search-core'
+

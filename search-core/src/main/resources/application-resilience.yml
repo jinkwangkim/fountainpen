@@ -1,0 +1,5 @@
+resilience4j.retry:
+  configs:
+    default:
+      maxRetryAttempts: 5
+      waitDuration: 100
