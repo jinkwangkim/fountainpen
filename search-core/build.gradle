@@ -1,5 +1,6 @@
 dependencies {
     implementation("org.springframework.kafka:spring-kafka")
+    implementation("org.javassist:javassist:3.29.2-GA")
     implementation("org.apache.kafka:kafka-streams")
     implementation("org.springframework.boot:spring-boot-starter-data-elasticsearch")
     implementation 'co.elastic.clients:elasticsearch-java:8.1.2'
