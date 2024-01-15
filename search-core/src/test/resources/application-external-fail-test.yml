@@ -1,3 +1,9 @@
+kafka:
+  bootstrapAddress: localhost:9092
+  groupId: fountainpen
+  topics:
+    keyWordSearch: keyword-search-event
+
 external:
   api:
     kakao:
