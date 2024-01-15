@@ -1,6 +1,6 @@
 package com.kwang23.fountainpen.keyword.adapter.in;
 
-import com.kwang23.fountainpen.keyword.application.port.in.KeyWordSearchService;
+import com.kwang23.fountainpen.keyword.application.port.in.KeyWordCommandService;
 import io.github.resilience4j.retry.Retry;
 import io.github.resilience4j.retry.RetryRegistry;
 import io.vavr.control.Try;
@@ -16,7 +16,7 @@ import javax.persistence.NoResultException;
 @Component
 @Slf4j
 public class KeyWordSearchEventListener {
-    private final KeyWordSearchService keyWordSearchService;
+    private final KeyWordCommandService keyWordCommandService;
     private final RetryRegistry retryRegistry;
 
     @Async("keyWordRegistryTaskExecutor")
@@ -26,12 +26,12 @@ public class KeyWordSearchEventListener {
         Retry retry = retryRegistry.retry("onApplicationEventRetry");
         Runnable runnable = Retry.decorateRunnable(retry, () -> {
             try {
-                keyWordSearchService.addKeyWord(event.getKeyWord());
+                keyWordCommandService.addKeyWord(event.getKeyWord());
             } catch (NoResultException e) {
-                keyWordSearchService.saveKeyWord(event.getKeyWord());
+                keyWordCommandService.saveKeyWord(event.getKeyWord());
             }
         });
         Try.runRunnable(runnable)
-                .onFailure(t -> keyWordSearchService.addKeyWord(event.getKeyWord())).get();
+                .onFailure(t -> keyWordCommandService.addKeyWord(event.getKeyWord())).get();
     }
 }

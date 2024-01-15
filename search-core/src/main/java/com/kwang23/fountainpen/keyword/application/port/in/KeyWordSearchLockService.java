@@ -12,14 +12,14 @@ import org.springframework.stereotype.Service;
 public class KeyWordSearchLockService {
     private final GlobalLockService globalLockService;
 
-    private final KeyWordSearchService keyWordSearchService;
+    private final KeyWordCommandService keyWordCommandService;
 
     public void addKeyWordWithDistributedLock(String keyWord) {
         try(DistributedLock addKeyWordLock = globalLockService.getLock("addKeyWordLock:"+keyWord, 50, 3000)) {
             if (!addKeyWordLock.tryLock()) {
                 throw new RuntimeException("lock fail");
             }
-            keyWordSearchService.addKeyWordNoDbLock(keyWord);
+            keyWordCommandService.addKeyWordNoDbLock(keyWord);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

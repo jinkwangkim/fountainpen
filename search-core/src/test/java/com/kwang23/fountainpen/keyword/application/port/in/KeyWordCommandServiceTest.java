@@ -3,7 +3,6 @@ package com.kwang23.fountainpen.keyword.application.port.in;
 import com.kwang23.fountainpen.keyword.adapter.in.KeyWordSearchDto;
 import com.kwang23.fountainpen.keyword.adapter.out.KeyWordSearchJpaEntity;
 import com.kwang23.fountainpen.keyword.adapter.out.KeyWordSearchRepository;
-import com.kwang23.fountainpen.keyword.application.port.in.KeyWordSearchService;
 import com.kwang23.fountainpen.keyword.application.port.out.KeyWordSearchPort;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,9 +22,9 @@ import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class KeyWordSearchServiceTest {
+class KeyWordCommandServiceTest {
     @InjectMocks
-    KeyWordSearchService keyWordSearchService;
+    KeyWordCommandService keyWordCommandService;
     @Mock
     KeyWordSearchRepository keyWordSearchRepository;
     @Mock
@@ -36,7 +35,7 @@ class KeyWordSearchServiceTest {
         KeyWordSearchDto keyWordSearchDto = new KeyWordSearchDto("keyWord", 100, LocalDate.now());
         when(keyWordSearchRepository.findKeyWordList(anyInt())).thenReturn(List.of(keyWordSearchDto));
 
-        List<KeyWordSearchDto> searchWordList = keyWordSearchService.getSearchWordList(10);
+        List<KeyWordSearchDto> searchWordList = keyWordCommandService.getSearchWordList(10);
 
         assertThat(searchWordList.size()).isEqualTo(1);
         KeyWordSearchDto keyWordSearchDtoResult = searchWordList.get(0);
@@ -51,7 +50,7 @@ class KeyWordSearchServiceTest {
         when(keyWordSearchPort.searchKeyWordWithLock(anyString(), any())).thenReturn(keyWordSearch);
         TransactionSynchronizationManager.initSynchronization();
 
-        keyWordSearchService.addKeyWord(keyWord);
+        keyWordCommandService.addKeyWord(keyWord);
         TransactionSynchronizationManager.getSynchronizations().forEach(TransactionSynchronization::afterCommit);
 
         assertThat(keyWordSearch.getFrequency()).isEqualTo(101);

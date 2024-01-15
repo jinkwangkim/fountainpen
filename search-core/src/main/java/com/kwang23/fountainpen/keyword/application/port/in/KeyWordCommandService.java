@@ -3,7 +3,6 @@ package com.kwang23.fountainpen.keyword.application.port.in;
 import com.kwang23.fountainpen.keyword.adapter.in.KeyWordSearchDto;
 import com.kwang23.fountainpen.keyword.adapter.out.KeyWordSearchJpaEntity;
 import com.kwang23.fountainpen.keyword.adapter.out.KeyWordSearchRepository;
-import com.kwang23.fountainpen.infra.lock.GlobalLockService;
 import com.kwang23.fountainpen.keyword.application.port.out.AddKeyWordPort;
 import com.kwang23.fountainpen.keyword.application.port.out.KeyWordSearchPort;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +18,7 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class KeyWordSearchService implements AddKeyWordPort {
+public class KeyWordCommandService implements AddKeyWordPort {
     private final KeyWordSearchRepository keyWordSearchRepository;
     private final KeyWordSearchPort keyWordSearchPort;
 

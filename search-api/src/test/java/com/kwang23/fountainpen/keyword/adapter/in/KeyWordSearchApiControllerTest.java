@@ -1,8 +1,7 @@
 package com.kwang23.fountainpen.keyword.adapter.in;
 
-import com.kwang23.fountainpen.keyword.adapter.in.KeyWordSearchDto;
-import com.kwang23.fountainpen.keyword.application.port.in.KeyWordSearchService;
-import com.kwang23.fountainpen.keyword.adapter.in.KeyWordSearchApiController;
+import com.kwang23.fountainpen.keyword.application.port.in.KeyWordCommandService;
+import com.kwang23.fountainpen.keyword.application.port.out.KeyWordSearchRedisPort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +27,9 @@ class KeyWordSearchApiControllerTest {
     MockMvc mockMvc;
 
     @MockBean
-    KeyWordSearchService keyWordSearchService;
+    KeyWordCommandService keyWordCommandService;
+    @MockBean
+    KeyWordSearchRedisPort keyWordSearchRedisPort;
     @BeforeEach
     void setUp() {
     }
@@ -36,7 +37,7 @@ class KeyWordSearchApiControllerTest {
     @Test
     void getSearchWordList() throws Exception {
         KeyWordSearchDto keyWordSearchDto = new KeyWordSearchDto("keyWord", 10, LocalDate.now());
-        when(keyWordSearchService.getSearchWordList(10)).thenReturn(List.of(keyWordSearchDto));
+        when(keyWordCommandService.getSearchWordList(10)).thenReturn(List.of(keyWordSearchDto));
         mockMvc.perform(MockMvcRequestBuilders.get("/v1/search/word")
                         .queryParam("size", "10"))
                 .andDo(print())

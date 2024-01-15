@@ -30,7 +30,7 @@ import java.util.List;
 @RequiredArgsConstructor
 @Service
 public class KeyWordRankingService {
-    @Qualifier("keyWordSearchService")
+    @Qualifier("keyWordCommandService")
     private final AddKeyWordPort addKeyWordPort;
     private final KeyWordListSearchPort keyWordListSearchPort;
 
