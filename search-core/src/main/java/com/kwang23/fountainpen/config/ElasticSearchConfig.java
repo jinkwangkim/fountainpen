@@ -56,7 +56,7 @@ public class ElasticSearchConfig extends AbstractElasticsearchConfiguration{
 //        return new ElasticsearchClient(transport);
 
         ClientConfiguration configuration = ClientConfiguration.builder()
-                .connectedTo("localhost:9200")
+                .connectedTo("host.docker.internal:9200")
                 .withBasicAuth("elastic","changeme")
                 .build();
         return RestClients.create(configuration).rest();
